@@ -1,1 +1,1 @@
-# EGZ
+# EGZAMINAS
