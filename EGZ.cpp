@@ -14,6 +14,7 @@ std::ofstream fr("atrinkta.txt");
 std::ifstream at("atrinkta.txt");
 std::ofstream isr("rez.txt");
 std::ofstream urlai("url.txt");
+std::ifstream urls("urls.txt");
 
 void print(const std::string& item)
 {
@@ -22,6 +23,16 @@ void print(const std::string& item)
 
 void atrinkimas(int &n)
 {   
+    std::vector<std::string> urlsai;
+    std::string u;
+    while (!urls.eof()) {
+        urls >> u;
+        urlsai.push_back(u);
+        std::for_each(u.begin(), u.end(), [](char& c) {
+            c = ::tolower(c);
+            });
+        urlsai.push_back(u);
+    }
     int eil = 0;
     std::multiset<std::string> zodziai;
     std::string line;
@@ -33,11 +44,17 @@ void atrinkimas(int &n)
         while (ssLine)
         {
             ssLine >> name;
+            name += " ";
             std::string chars = "=~!@#$%^&*()_+{}:|<>?,./;'\[]1234567890-";
-            if (name.find("www.") != std::string::npos || name.find("http") != std::string::npos || name.find(".lt") != std::string::npos || name.find(".com") != std::string::npos || name.find(".site") != std::string::npos) {
-                urlai << name << '\n';
+            for (int i = 0; i < urlsai.size(); i++) {
+                u = ".";
+                u += urlsai[i];
+                u += " ";
+                if (name.find(u) != std::string::npos|| name.find("https") != std::string::npos || name.find("http") != std::string::npos || name.find("www.") != std::string::npos) {
+                    urlai << name << '\n';
+                    name = "";
+                }
             }
-            else {
                 for (char c : chars) {
                     name.erase(std::remove(name.begin(), name.end(), c), name.end());
                 }
@@ -47,7 +64,6 @@ void atrinkimas(int &n)
                     name += std::to_string(eil);
                     zodziai.insert(name);
                     n++;
-                }
             }
         }
     }
