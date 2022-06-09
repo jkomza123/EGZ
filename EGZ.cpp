@@ -44,8 +44,8 @@ void atrinkimas(int &n)
         while (ssLine)
         {
             ssLine >> name;
-            name += " ";
-            std::string chars = "=~!@#$%^&*()_+{}:|<>?,./;'\[]1234567890-";
+            name = name + " ";
+            std::string chars = "=~!@#$%^&*()_+{}:|<>?,./;'\[]1234567890- ";
             for (int i = 0; i < urlsai.size(); i++) {
                 u = ".";
                 u += urlsai[i];
